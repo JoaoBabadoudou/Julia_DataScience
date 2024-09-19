@@ -7,7 +7,8 @@ using TimeSeries
 using Dates
 using StatsBase
 using LinearAlgebra
-using DataFrames, GLM, Statistics, CSV, Plots
+using DataFrames, GLM, Statistics, CSV, 
+
 
 
 data = CSV.read("D:/Julia_project/DataHandling/AirPassengers.csv", DataFrame)
@@ -88,6 +89,7 @@ for i in 1:12
     lv[i]= minimum(Seas[:,i])
 end
 
+using Dates
 timed=Date(1949):Year(1) :Date(1960)
 hightVal= TimeArray(timed, hv)
 lowVal=TimeArray(timed,lv)
@@ -100,14 +102,29 @@ plot!(lowVal, linecolor=[:red] )
 ########## Month plot for seasonalities
 
 years=[year(d) for d in date]
-months=[month(d) for d in date]
+months1=[month(d) for d in date]
 
-df= DataFrame(yrars=years, months= months
+df= DataFrame(yrars=years, monthss= months1
  , value=AirPassengers) 
+yrars=years
 
-plot(xaxis= df[:,1],yaxis=df[:,3]  ,  group= years
- , label= months,  xlabel= "Month", ylabel="Value", 
- title="Seasonality Plot ", lw=2)############I'll come back
+value=AirPassengers
+
+
+m=["Jan","Feb", "Mar", "Apr", "May", "Jun",
+"Jul","Aug","Sep", "Oct", "Nov", "Dec"]
+
+months= repeat(m,12)
+
+
+plot(yrars,value, c=[:yellow  :red :blue :green :brown :black :purple :darkgreen :orange :skyblue :gray :grey]
+,group=months
+ ,  xlabel= "Month", ylabel="Value", 
+ title="Seasonality Plot ", lw=3)
+
+
+
+
 
 
 
