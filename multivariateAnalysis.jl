@@ -3,7 +3,7 @@
 using RDatasets
 using StatsBase
 using Plots
-using lin
+
 
 iris= dataset("datasets", "iris")
 describe(iris)
@@ -11,9 +11,9 @@ unique(iris.Species)
 
 ## Linear regression
 
-using DataFrames, GLM, Statistics, LinearAlgebra, CSV
+using DataFrames, GLM, Statistics, LinearAlgebra
 
-xVals, yVals = iris[:,1], iris[:,2]
+xVals, yVals = iris[:,1], iris[:,3]
 n = length(xVals)
 A = [ones(n) xVals]
 
@@ -24,10 +24,12 @@ b1A = sXY/sXX
 b0A = yBar - b1A*xBar
 Y=(b1A*xVals) .+ b0A
 X=xVals
-plot(X, Y),
-scatter(xVals,yVals)
 
-# Approach 2
-b1B = cor(xVals,yVals)*(std(yVals)/std(xVals))
-b0B = yBar - b1B*xBar
+
+
+scatter(xVals, yVals, msw=0)
+xlims = [minimum(xVals), maximum(yVals)]
+plot!(X, Y,
+c=:black, legend=:none, xlabel = "Sepal Length (cm)", ylabel = "Petal Length (cm)")
+
 
