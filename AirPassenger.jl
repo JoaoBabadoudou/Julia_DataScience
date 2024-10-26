@@ -1,7 +1,8 @@
 ############### The classic Box & Jenkins airline data. 
 #########  Monthly totals of international airline passengers, 1949 to 1960
 
-using StatsBase,TimeSeries, Dates, Plots, TSAnalysis
+using StatsBase,TimeSeries, Dates, Plots, Dates
+
 using DataFrames, GLM, Statistics, CSV, LinearAlgebra
 
 
@@ -116,7 +117,7 @@ months= repeat(m,12)
 plot(yrars,value, c=[:yellow  :red :blue :green 
 :brown :black :purple :darkgreen :orange :skyblue :gray :grey]
 ,group=months
- ,  xlabel= "Month", ylabel="Value", 
+ ,  xlabel= "Month", ylabel="value", 
  title="Seasonality Plot ", lw=3)
 
 
@@ -159,14 +160,23 @@ println("Mean Squared Error: $mse")
 #adjust the seasonality type and
 # smoothing parameters to suit your specific dataset.
 
-
+using TSAnalysis
 ########### Sarima
+
 acf_values = autocor(AirPassengers)  # 20 lags of autocorrelation
 
 # Plot ACF
 acf_plot = plot(acf_values, seriestype=:bar, label="ACF",
  legend=:topright, title="Autocorrelation Function",
   xlabel="Lags", ylabel="ACF")
+
+
+# Seasonal ARIMA: SARIMA(p,d,q)(P,D,Q,m), m is seasonality period
+model_sarima = fit(SARIMA, AirPassengers, (1, 1, 1)(0, 1, 1, 12))  # SARIMA with monthly seasonality
+sarima_forecast = forecast(model_sarima, 12)
+
+plot(data, label="Actual")
+plot!(sarima_forecast, label="SARIMA Forecast")
 
 
 
