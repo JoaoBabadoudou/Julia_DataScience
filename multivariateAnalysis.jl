@@ -17,7 +17,7 @@ xVals, yVals = iris[:,1], iris[:,3]
 n = length(xVals)
 A = [ones(n) xVals]
 
-# Approach 1
+# Approach 
 xBar, yBar = mean(xVals),mean(yVals)
 sXX, sXY = ones(n)'*(xVals.-xBar).^2 , dot(xVals.-xBar,yVals.-yBar)
 b1A = sXY/sXX

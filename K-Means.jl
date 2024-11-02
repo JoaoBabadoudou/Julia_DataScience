@@ -5,8 +5,8 @@ using Measures
 
 using    DataFrames,    Clustering,    Gadfly,    Random 
 Random.seed!(429)
-mean_x2    =    mean(x2_mat,    dims=1) 
-##    mean    center    the    cols
+mean_x2 = mean(x2_mat, dims=1) 
+##    mean center the   cols
 x2_mat_c    =    x2_mat    .-    mean_x2 
 N    =    size(x2_mat_c)[1]
 ##    kmeans()    -    each    column    of    X    is    a    sample    -    requires    reshaping    x2 
